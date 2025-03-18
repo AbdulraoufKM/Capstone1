@@ -132,27 +132,21 @@ public class UserService {
     }
 
     //#3
-    public ArrayList<Product> getRangPriceCategory(String categoryId,int p1 , int p2 ) {
-
+   public ArrayList<Product> getRangPriceCategory(String categoryId, int p1, int p2) {
         ArrayList<Product> products = new ArrayList<>();
-        for(Product product1 : productService.products ) {
-            if(!product1.getCategoryID().equals(categoryId)) {
-                return null;
-            }
-        }
-        if (p1 < 0 && p2 <0 && p1<p2){
-            return null;
+
+        if (p1 > p2 || p1 < 0 || p2 < 0) {
+            return new ArrayList<>();
         }
 
         for (Product product1 : productService.products) {
-            if(p1>=product1.getPrice() || p2<=product1.getPrice()){
+            if (product1.getCategoryID().equals(categoryId) &&
+                    product1.getPrice() >= p1 && product1.getPrice() <= p2) {
                 products.add(product1);
             }
         }
+
         return products;
-
     }
-
-
 
 }
